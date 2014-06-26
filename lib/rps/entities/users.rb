@@ -5,8 +5,8 @@ class RPS::Users
   
   def initialize(name, password_digest, id=nil)
     @name = name
-    @id = id
     @password_digest = password_digest
+    @id = id
   end
 
   def update_password(password)

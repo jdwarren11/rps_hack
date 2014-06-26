@@ -9,7 +9,7 @@ get '/sign-in' do
 end
 
 get '/' do
-
+RPS.PlayGame.run(params)
 end
 
 post '/' do 

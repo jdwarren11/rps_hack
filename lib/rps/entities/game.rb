@@ -1,7 +1,7 @@
 class RPS::Game
 
-  def initialize(mid, p1_id, p2_id p1_move =nil, p2_move=nil, winner=:pending, id=nil)
-    @mid = mid
+  def initialize(m_id, p1_id, p2_id, p1_move =nil, p2_move=nil, winner=nil id=nil)
+    @m_id = m_id
     @p1_id = p1_id
     @p2_id = p2_id
     @p1_move = p1_move
@@ -21,13 +21,13 @@ class RPS::Game
       p2_move = p_move
     end
 
-    calculate_result
+  
 
 
   end
 
   def calculate_result
-    if @winnner == :pending && p1_move != nil && p2_move != nil
+    if @winnner == nil && p1_move != nil && p2_move != nil
       if @p1_move == @p2_move
         @winnner = 'tie'
       elsif @p1_move == 'rock'
