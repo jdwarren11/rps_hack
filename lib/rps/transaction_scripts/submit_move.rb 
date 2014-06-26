@@ -1,0 +1,16 @@
+module RPS
+  class SubmitMove
+
+    def get_game(match)
+
+    end
+
+    def make_move(user,match)
+      
+      if exist_pending_move?(match)
+        game = get_last_game(match)
+
+
+  end
+
+end
