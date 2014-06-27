@@ -1,10 +1,7 @@
 module RPS
 end
 
-require_relative 'game.rb'
-require_relative 'match.rb'
-require_relative 'users.rb'
-require_relative ''
 
-
-DIR["#{File.dirname(__FILE__)}/rps/folder/*.rb"].each { |f| require(f) }
+Dir["#{File.dirname(__FILE__)}/rps/**/*.rb"].each { |f| require(f) }
+# DIR["#{File.dirname(__FILE__)}/entities/DB/*.rb"].each { |f| require(f) }
+# DIR["#{File.dirname(__FILE__)}/rps/transaction_scripts/*.rb"].each { |f| require(f) }

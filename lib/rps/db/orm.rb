@@ -18,7 +18,7 @@ module RPS
         CREATE TABLE IF NOT EXISTS users (
           id serial NOT NULL PRIMARY KEY,          
           name VARCHAR(30),
-          password_digest VARCHAR(30) 
+          password_digest VARCHAR(100) 
         )])
 
       @db.exec(%Q[
@@ -46,7 +46,7 @@ module RPS
 
     def create_match(player_id)
       response = @db.exec_params(%Q[
-        INSERT INTO matches(player_id)
+        INSERT INTO matches(p1_id)
         VALUES ($1)
         RETURNING id;
         ], [player_id])
@@ -83,7 +83,7 @@ module RPS
       response.first["id"]
     end
 
-    def update_moves()
+    def update_p1_moves()
       response = db.exec_params(%Q[
         UPDATE games
         SET (p_move) = ($1)
@@ -91,20 +91,42 @@ module RPS
         ], [])
     end
 
-    def get_last_game_by_match_id(match_id)
+    def update_p2_moves()
+      response = db.exec_params(%Q[
+        UPDATE games
+        SET (p_move) = ($1)
+        where id = $2;
+        ], [])
+    end
 
-      result = @db.exec(%Q[
-        select m_id, p1_id, p2_id, p1_move, 
-        p2_move, winner, id from games 
-        where games.m_id = $1 and winner is null 
-        ],[match_id])
+    # def get_last_game_by_match_id(match_id)
+
+    #   result = @db.exec(%Q[
+    #     select m_id, p1_id, p2_id, p1_move, 
+    #     p2_move, winner, id from games 
+    #     where games.m_id = $1 and winner is null 
+    #     ],[match_id])
     
-      if result.num_tuplas.zero?
-        return nil
-      else
-        game = Game.new(result[0]['m_id'],result[0]['p1_id'],result[0]['p2_id']
-          ,result[0]['p1_move'],result[0]['p2_move'],nil,result[0]['id'])
-      end
+    #   if result.num_tuplas.zero?
+    #     return nil
+    #   else
+    #     game = Game.new(result[0]['m_id'],result[0]['p1_id'],result[0]['p2_id']
+    #       ,result[0]['p1_move'],result[0]['p2_move'],nil,result[0]['id'])
+    #   end
+    # end
+
+    # =======================================
+    #            USERS / PLAYERS
+    # =======================================
+
+    def create_user(name, password_digest)
+      response = @db.exec_params(%Q[
+        INSERT INTO users(name, password_digest)
+        VALUES ($1, $2)
+        RETURNING id;
+        ], [name, password_digest])
+
+      response.first["id"]
     end
 
     def get_player(match_id)
@@ -123,7 +145,7 @@ module RPS
 
   # =====================================
   
-  def self.ORM
+  def self.orm
     @__db_instance ||= ORM.new
   end
 end
