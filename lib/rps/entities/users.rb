@@ -1,7 +1,8 @@
-# this is bad
+# using sha1 is bad, but Nick told us we could be bad this one time
 require 'digest/sha1' 
 
-class RPS::Users
+class RPS::User
+  attr_reader :id, :username, :password_digest
   
   def initialize(name, password_digest, id=nil)
     @name = name

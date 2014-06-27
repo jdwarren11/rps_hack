@@ -1,6 +1,10 @@
 require 'pry-byebug'
 require 'pg'
 
+# find_open_match >>> checks to see if there is a match with only one player
+# assign_new_player >>> assigns second player to match and starts new game
+# create_game
+
 module RPS
   class ORM
 
@@ -12,30 +16,79 @@ module RPS
     def build_tables
       @db.exec(%Q[
         CREATE TABLE IF NOT EXISTS users (
+          id serial NOT NULL PRIMARY KEY,          
           name VARCHAR(30),
-          password_digest VARCHAR(30), 
-          id serial NOT NULL PRIMARY KEY
+          password_digest VARCHAR(30) 
         )])
 
       @db.exec(%Q[
         CREATE TABLE IF NOT EXISTS matches (
+          id serial NOT NULL PRIMARY KEY,
           p1_id integer REFERENCES users(id),
           p2_id integer REFERENCES users(id),
-          winner integer REFERENCES users(id),
-          id serial NOT NULL PRIMARY KEY  
+          winner integer REFERENCES users(id)
         )])
 
       @db.exec(%Q[
         CREATE TABLE IF NOT EXISTS games (
-          m_id integer REFERENCES matches(id),
+          id serial NOT NULL PRIMARY KEY,
+          match_id integer REFERENCES matches(id),
           p1_id integer REFERENCES users(id),
           p2_id integer REFERENCES users(id),
-          p1_move VARCHAR(15),
-          p2_move VARCHAR(15),
-          winner integer REFERENCES users(id)
-          id serial NOT NULL PRIMARY KEY
+          p1_move VARCHAR(10),
+          p2_move VARCHAR(10)
         )])
+    end
 
+    # =======================================
+    #               Matches
+    # =======================================
+
+    def create_match(player_id)
+      response = @db.exec_params(%Q[
+        INSERT INTO matches(player_id)
+        VALUES ($1)
+        RETURNING id;
+        ], [player_id])
+
+      response.first["id"]
+    end
+
+    def find_open_match
+
+    end
+
+    def assign_new_player(match_id, player_id)
+      response = @db.exec_params(%Q[
+        UPDATE matches
+        SET (p2_id) = ($1)
+        WHERE id = $2;
+        ], [match_id, player_id])
+
+      create_game(match_id, p1_id, p2_id)
+    end
+
+    # =======================================
+    #               Games
+    # =======================================
+
+
+    def create_game(match_id, p1_id, p2_id)
+      response = @db.exec_params(%Q[
+        INSERT INTO games(match_id, p1_id, p2_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id;
+        ], [m_id, p1_id, p2_id])
+
+      response.first["id"]
+    end
+
+    def update_moves()
+      response = db.exec_params(%Q[
+        UPDATE games
+        SET (p_move) = ($1)
+        where id = $2;
+        ], [])
     end
 
     def get_last_game_by_match_id(match_id)
@@ -67,6 +120,8 @@ module RPS
     end
 
   end
+
+  # =====================================
   
   def self.ORM
     @__db_instance ||= ORM.new
