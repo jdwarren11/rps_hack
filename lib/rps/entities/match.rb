@@ -1,9 +1,9 @@
 module RPS
   class Match
-    attr_reader :p1_id, :id
+    attr_reader :p1_id, :id, :p2_id
     attr_accessor :winner
 
-    def initialize(p1_id, winner=:pending, id=nil)
+    def initialize(p1_id, winner=:pending,p2_id=nil, id=nil)
       @p1_id = p1_id
       @winner = winner
       @id = id

@@ -10,7 +10,7 @@ describe 'RPS::AssignMatch' do
     new_player.create!
     new_game_id = RPS::AssignMatch.run(new_player.id)
 
-    expect(new_game_id).to eq('3')
+    expect(new_game_id).to eq('5')
 
 
   end

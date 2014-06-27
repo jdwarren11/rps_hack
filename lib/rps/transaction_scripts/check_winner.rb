@@ -1,5 +1,5 @@
 module RPS
-  class PlayGame
+  class CheckWinner
 
     def count_win(player,c1,c2,match)
 
@@ -12,36 +12,12 @@ module RPS
 
     end
 
-    def self.run(match_id,player_id,move)
-      # params => {:user_id => 23, :match_id => 1, :game_id => 1, :move => 'rock'}
-      # check for match
-      # enter move in db
-      # check that 2 moves have been played
-      # return hash with result
+    def self.run(match_id)
 
-      # if game exists and 2 moves have been played
-      # get game from database and compare moves
-      # database_hash = {game_id, match_id, p1_id, p2_id, p1_move, p2_move}
-      open_game = RPS.orm.find_open_game(match_id)
+      match_db = find_match_by_id(match_id)
 
-
-      if open_game
-        game = RPS::Game.new(open_game['m_id'],
-          open_game['p1_id'],open_game['p2_id'],
-          open_game['p1_move'],open_game['p2_move'],open_game['id'] )
-
-        game.make_move!(game.id,player_id,move)
-
-      else
-
-        match_info = RPS::orm.find_match_by_id(match_id)
-        
-        game = RPS::Game.new(match_info['id'],match_info['p1_id'],
-          match_info['p2_id'],nil,nil,nil)
-
-        game.create!
-        game.make_move!(game.id,player_id,move)
-      end
+      match = RPS::Match.new(match_db['p1_id'],
+        match_db['winner'],match_db['p2_id'],match_db['id'])
 
       Player1_counter = 0
       Player2_counter = 0
@@ -83,20 +59,13 @@ module RPS
         end
 
         if Player1_counter >= 3
-          match.winner = match.p1_id
-          match.update!
           return match.p1_id
         elsif Player2_counter >= 3
-          match.winner = match.p2_id
-          match.update!
           return match.p2_id
         end     
       end
       
       return false
 
-
-
-    end
   end
 end

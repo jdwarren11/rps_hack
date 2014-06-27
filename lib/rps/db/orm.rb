@@ -55,20 +55,28 @@ module RPS
     end
 
     def find_open_match
-
-
       open_match = @db.exec(%Q[
-
         select * from matches 
         where p2_id is null;
-        ])
+        ])      
+        if open_match.num_tuples.zero?
+          return false
+        else
+          return open_match[0]
+        end
+    end
 
-      
-      if open_match.num_tuples.zero?
-        return false
-      else
-        return open_match[0]['id']
-      end
+    def find_match_by_id(id)
+      match = @db.exec(%Q[
+        select * from matches 
+        where id = $1;
+        ],[id])      
+        
+        if match.num_tuples.zero?
+          return false
+        else
+          return match
+        end
     end
 
     def assign_new_player(match_id, player_id)
@@ -78,15 +86,11 @@ module RPS
         WHERE id = $1;
         ], [match_id, player_id])
 
-        match_info = @db.exec_params(%Q[
-
-          select p1_id from matches
-          where id = $1
-
-          ],[match_id])
-
-        create_game(match_id, match_info[0]['p1_id'], player_id)
-
+        # match_info = @db.exec_params(%Q[
+        #   select p1_id from matches
+        #   where id = $1
+        #   ],[match_id])
+        # create_game(match_id, match_info[0]['p1_id'], player_id)
     end
 
     # =======================================
@@ -104,20 +108,44 @@ module RPS
       response.first["id"]
     end
 
-    def update_p1_moves()
-      response = db.exec_params(%Q[
-        UPDATE games
-        SET (p_move) = ($1)
-        where id = $2;
-        ], [])
+    def find_open_game(match_id)
+
+      open_game = @db.exec(%Q[
+        select * from games
+        where match_id = $1
+        and (p2_move is null 
+        or p1_move is null)
+        ],[match_id])
+
+        if open_game.num_tuples.zero?
+          return false
+        else
+          return open_game[0]
+        end
     end
 
-    def update_p2_moves()
+    def update_p1_move(game_id, p_move)
       response = db.exec_params(%Q[
         UPDATE games
-        SET (p_move) = ($1)
-        where id = $2;
-        ], [])
+        SET (p1_move) = ($2)
+        where id = $1;
+        ], [game_id, p_move])
+    end
+
+    def update_p2_move(game_id, p_move)
+      response = db.exec_params(%Q[
+        UPDATE games
+        SET (p2_move) = ($2)
+        where id = $1;
+        ], [game_id, p_move])
+    end
+
+    def get_game_by_match_id(m_id)
+      list = @db.exec_params(%Q[
+        SELECT * FROM games
+        WHERE match_id = ($1);
+        ], [m_id])
+      return list
     end
 
     # def get_last_game_by_match_id(match_id)
