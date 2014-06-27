@@ -1,10 +1,10 @@
 module RPS
   class Match
-    attr_reader :player_id, :id
+    attr_reader :p1_id, :id
     attr_accessor :winner
 
-    def initialize(player_id, winner=:pending, id=nil)
-      @player_id = player_id
+    def initialize(p1_id, winner=:pending, id=nil)
+      @p1_id = p1_id
       @winner = winner
       @id = id
     end
@@ -14,7 +14,7 @@ module RPS
     # if not, we need to create a new match
     # should match have a total number of games played?????
     def create!
-      id_from_db = RPS.orm.create_match(@player_id)
+      id_from_db = RPS.orm.create_match(@p1_id)
       @id = id_from_db
       self
     end

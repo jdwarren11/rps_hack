@@ -44,28 +44,49 @@ module RPS
     #               Matches
     # =======================================
 
-    def create_match(player_id)
+    def create_match(p1_id)
       response = @db.exec_params(%Q[
         INSERT INTO matches(p1_id)
         VALUES ($1)
         RETURNING id;
-        ], [player_id])
+        ], [p1_id])
 
       response.first["id"]
     end
 
     def find_open_match
 
+
+      open_match = @db.exec(%Q[
+
+        select * from matches 
+        where p2_id is null;
+        ])
+
+      
+      if open_match.num_tuples.zero?
+        return false
+      else
+        return open_match[0]['id']
+      end
     end
 
     def assign_new_player(match_id, player_id)
-      response = @db.exec_params(%Q[
+      @db.exec_params(%Q[
         UPDATE matches
-        SET (p2_id) = ($1)
-        WHERE id = $2;
+        SET (p2_id) = ($2)
+        WHERE id = $1;
         ], [match_id, player_id])
 
-      create_game(match_id, p1_id, p2_id)
+        match_info = @db.exec_params(%Q[
+
+          select p1_id from matches
+          where id = $1
+
+          ],[match_id])
+
+        create_game(match_id, match_info[0]['p1_id'], player_id)
+
     end
 
     # =======================================
@@ -73,10 +94,10 @@ module RPS
     # =======================================
 
 
-    def create_game(match_id, p1_id, p2_id)
+    def create_game(m_id, p1_id, p2_id)
       response = @db.exec_params(%Q[
         INSERT INTO games(match_id, p1_id, p2_id)
-        VALUES ($1, $2, $3, $4)
+        VALUES ($1, $2, $3)
         RETURNING id;
         ], [m_id, p1_id, p2_id])
 
