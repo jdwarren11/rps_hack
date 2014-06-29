@@ -204,6 +204,13 @@ module RPS
       return players
     end
 
+    def get_user_by_username(username)
+      @db.exec_params(%Q[
+        SELECT * FROM users
+        WHERE name = ($1);
+        ], [username])
+    end
+
   end
 
   # =====================================

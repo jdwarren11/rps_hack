@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Rock | Paper | Scissors</title>
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/foundation/5.1.1/css/foundation.min.css">
+    </head>
+    <body>
+        <header class="row">
+            <%#= erb :_header %>   
+        </header>
+        <section class="row">
+            <div class="large-3 columns">
+                <%#= erb :_user_info %>
+            </div>
+            <div class="large-3-centered columns">
+                <%= yield %>
+            </div>
+            <div class="large-3 columns">
+                <%#= erb :_ads_left_column %>
+            </div>
+        </section>
+        <footer class="row">
+            <%#= erb :_footer %>
+        </footer>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.js"></script>
+    </body>
+</html>

@@ -27,8 +27,3 @@ module RPS
     
   end
 end
-if player_id == @p1_id
-      RPS.orm.update_p1_move(@id, @p1_move)
-    elsif player_id == @p2_id
-      RPS.orm.update_move(@id, @p2_move)
-    end

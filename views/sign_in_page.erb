@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign in</title>
+<!--   <link rel="stylesheet" href="../public/css/style.css" type="text/css" /> -->
+</head>
+<body>
+
+<div class = 'center'>
+  
+  <div  class = 'sign_blocks'>
+    
+      
+      <form method="post" action="/sign_up">
+        
+          <div>
+            <label for="name">Name:</label>
+            <input type="text" name="username" />
+          </div>
+        
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" />
+          </div>
+
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password_verify" />
+          </div>
+        
+          <div>
+            <input type="submit" value="Sign up">
+          </div>
+
+        </form>
+
+    </div>
+        
+    <div  class = 'sign_blocks'>
+    
+      
+      <form method="post" action="/sign_in">
+        
+          <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" />
+          </div>
+        
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" />
+          </div>
+        
+          <div>
+            <input type="submit" value="Sign in">
+          </div>
+
+        </form>
+
+    </div>
+
+</div>
+      
+  </body>
+</html>
