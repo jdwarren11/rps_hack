@@ -70,13 +70,14 @@ module RPS
       match = @db.exec(%Q[
         select * from matches 
         where id = $1;
-        ],[id])      
+        ],[id])
         
         if match.num_tuples.zero?
           return false
         else
           return match
         end
+
     end
 
     def assign_new_player(match_id, player_id)
@@ -108,19 +109,18 @@ module RPS
       response.first["id"]
     end
 
-    def find_open_game(match_id)
-
-      open_game = @db.exec(%Q[
+    def find_current_game(match_id)
+      current_game = @db.exec(%Q[
         select * from games
         where match_id = $1
         and (p2_move is null 
         or p1_move is null)
         ],[match_id])
 
-        if open_game.num_tuples.zero?
+        if current_game.num_tuples.zero?
           return false
         else
-          return open_game[0]
+          return current_game
         end
     end
 
@@ -140,7 +140,7 @@ module RPS
         ], [game_id, p_move])
     end
 
-    def get_game_by_match_id(m_id)
+    def get_games_by_match_id(m_id)
       list = @db.exec_params(%Q[
         SELECT * FROM games
         WHERE match_id = ($1);
@@ -176,6 +176,13 @@ module RPS
         ], [name, password_digest])
 
       response.first["id"]
+    end
+
+    def find_user_by_id(p_id)
+      @db.exec(%Q[
+        SELECT * FROM users
+        WHERE id = (p_id);
+        ])
     end
 
     def get_player(match_id)

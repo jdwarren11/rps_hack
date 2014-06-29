@@ -1,7 +1,7 @@
 class RPS::Game
 
-  attr_reader :m_id, :p_id, :id
-  attr_accessor :p_move
+  attr_reader :m_id, :p1_id, :p2_id, :id
+  attr_accessor :p1_move, :p2_move
 
   def initialize(m_id, p1_id, p2_id, p1_move=nil, p2_move=nil, id=nil)
     @m_id = m_id
