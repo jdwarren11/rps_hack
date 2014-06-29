@@ -2,12 +2,14 @@
 require 'digest/sha1' 
 
 class RPS::User
-  attr_reader :id, :name, :password_digest
+  attr_reader :id, :name, :password_digest, :session_id
+
   
-  def initialize(name, password_digest=nil, id=nil)
+  def initialize(name, password_digest=nil, id=nil, session_id=nil)
     @name = name
     @password_digest = password_digest
     @id = id
+    @session_id = session_id
   end
 
   def update_password(password)

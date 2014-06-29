@@ -18,7 +18,8 @@ module RPS
         CREATE TABLE IF NOT EXISTS users (
           id serial NOT NULL PRIMARY KEY,          
           name VARCHAR(30),
-          password_digest VARCHAR(100) 
+          password_digest VARCHAR(100),
+          session_id text; 
         )])
 
       @db.exec(%Q[

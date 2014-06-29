@@ -2,10 +2,11 @@
 
     float: left;
     width: 45%;
+    padding: 0.3rem;
+    border-right: 1px solid black;
  }
 
  .center {
 
-    width: 70;
-    text-align: center;
+    width: 90%;
  }
