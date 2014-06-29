@@ -8,9 +8,11 @@ module RPS
       match = RPS.orm.find_match_by_id( params[:match_id] )
       if match.nil?
         return { :success? => false, :error => :no_match }
+      else
+        current_match = RPS::Match.new(match['p1_id'], match['p2_id'], match['id'])
       end
 
-      player = RPS.orm.get_player( params[:user_id] )
+      player = RPS.orm.find_user_by_id( params[:user_id] )
       if player.nil?
         return { :success? => false, :error => :no_user }
       end
@@ -35,7 +37,7 @@ module RPS
         @ties = 0
 
         all_games = RPS.orm.get_games_by_match_id( params[:match_id] )
-        list.each do |game|
+        all_games.each do |game|
           if game['p1_move'] == game['p2_move']
             @ties += 1
           elsif game['p1_move'] == 'rock'
@@ -57,19 +59,22 @@ module RPS
               @player1_wins += 1
             end
           else
-            'something went wrong'
+            'error'
           end
 
           if @player1_wins == 3
-            match.winner = match.p1_id
-            return match.p1_id
+            current_match.winner = current_match.p1_id
+            curent_match.save_winner!
+            return current_match.p1_id
           elsif @player2_wins == 3
-            match.winner = match.p2_id
-            return match.p2_id
+            current_match.winner = current_match.p2_id
+            curent_match.save_winner!
+            return current_match.p2_id
           end
         end
       end
 
+      # return hash to post results
     end
 
 

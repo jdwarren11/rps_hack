@@ -3,8 +3,9 @@ module RPS
     attr_reader :p1_id, :id, :p2_id
     attr_accessor :winner
 
-    def initialize(p1_id, p2_id=nil, winner=:pending, id=nil)
+    def initialize(p1_id, p2_id=nil, id=nil, winner=:pending)
       @p1_id = p1_id
+      @p2_id = p2_id
       @winner = winner
       @id = id
     end
@@ -19,6 +20,15 @@ module RPS
       self
     end
 
+    def save_winner!
+        RPS.orm.update_winner(@id, @winner)
+    end
+
     
   end
 end
+if player_id == @p1_id
+      RPS.orm.update_p1_move(@id, @p1_move)
+    elsif player_id == @p2_id
+      RPS.orm.update_move(@id, @p2_move)
+    end

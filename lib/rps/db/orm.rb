@@ -77,7 +77,6 @@ module RPS
         else
           return match
         end
-
     end
 
     def assign_new_player(match_id, player_id)
@@ -92,6 +91,14 @@ module RPS
         #   where id = $1
         #   ],[match_id])
         # create_game(match_id, match_info[0]['p1_id'], player_id)
+    end
+
+    def update_winner(id, winner_id)
+      response = @db.exec_params(%Q[
+        UPDATE matches
+        SET (winner) = ($2)
+        WHERE id = $1;
+        ], [id, winner_id])
     end
 
     # =======================================
@@ -141,11 +148,11 @@ module RPS
     end
 
     def get_games_by_match_id(m_id)
-      list = @db.exec_params(%Q[
+      games = @db.exec_params(%Q[
         SELECT * FROM games
         WHERE match_id = ($1);
         ], [m_id])
-      return list
+      return games
     end
 
     # def get_last_game_by_match_id(match_id)
