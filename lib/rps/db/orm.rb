@@ -75,7 +75,7 @@ module RPS
         if match.num_tuples.zero?
           return false
         else
-          return match
+          return match.first
         end
     end
 
@@ -112,7 +112,7 @@ module RPS
         VALUES ($1, $2, $3)
         RETURNING id;
         ], [m_id, p1_id, p2_id])
-
+      
       response.first["id"]
     end
 
@@ -127,12 +127,12 @@ module RPS
         if current_game.num_tuples.zero?
           return false
         else
-          return current_game
+          return current_game.first
         end
     end
 
     def update_p1_move(game_id, p_move)
-      response = db.exec_params(%Q[
+      response = @db.exec_params(%Q[
         UPDATE games
         SET (p1_move) = ($2)
         where id = $1;
@@ -140,7 +140,7 @@ module RPS
     end
 
     def update_p2_move(game_id, p_move)
-      response = db.exec_params(%Q[
+      response = @db.exec_params(%Q[
         UPDATE games
         SET (p2_move) = ($2)
         where id = $1;
@@ -155,22 +155,6 @@ module RPS
         ], [m_id])
       return games
     end
-
-    # def get_last_game_by_match_id(match_id)
-
-    #   result = @db.exec(%Q[
-    #     select m_id, p1_id, p2_id, p1_move, 
-    #     p2_move, winner, id from games 
-    #     where games.m_id = $1 and winner is null 
-    #     ],[match_id])
-    
-    #   if result.num_tuplas.zero?
-    #     return nil
-    #   else
-    #     game = Game.new(result[0]['m_id'],result[0]['p1_id'],result[0]['p2_id']
-    #       ,result[0]['p1_move'],result[0]['p2_move'],nil,result[0]['id'])
-    #   end
-    # end
 
     # =======================================
     #            USERS / PLAYERS

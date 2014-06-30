@@ -24,7 +24,7 @@
 </form> -->
 
 <div class="game_moves">
-  <a href= " /gameplay/move/<%='rock' %>" > <img src="../img/rock.png" /></a>
-  <a href=" /gameplay/move/<%='paper'%> "><img src="../img/paper.png" /></a>
-  <a href=" /gameplay/move/<%='scissors'%>"><img src="../img/scissors.png"/></a>
+  <a href= " /gameplay/move/<%='rock'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>" > <img src="../img/rock.png" /></a>
+  <a href=" /gameplay/move/<%='paper'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/paper.png" /></a>
+  <a href=" /gameplay/move/<%='scissors'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/scissors.png"/></a>
 </div>

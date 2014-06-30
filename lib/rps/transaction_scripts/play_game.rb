@@ -5,10 +5,11 @@ module RPS
 
     def self.run(params)
 
-      match = RPS.orm.find_match_by_id( params[:match_id] )
+      match = RPS.orm.find_match_by_id( params[:match_id].to_i )
       if match.nil?
         return { :success? => false, :error => :no_match }
       else
+        # binding.pry
         current_match = RPS::Match.new(match['p1_id'], match['p2_id'], match['id'])
       end
 
@@ -17,26 +18,30 @@ module RPS
         return { :success? => false, :error => :no_user }
       end
 
-      find_game = RPS.orm.find_current_game( params[:match_id])
-      if find_game.nil?
-        current_game = RPS::Game.new(match['m_id'], match['p1_id'], match['p2_id'])
+      find_game = RPS.orm.find_current_game( params[:match_id].to_i)
+      if find_game == false
+        # binding.pry
+        current_game = RPS::Game.new(match['id'], match['p1_id'], match['p2_id'])
         current_game.create!
+        # binding.pry
         current_game.make_move!(current_game.id, params[:user_id], params[:move])
       else
         # something
-        current_game = RPS::Game.new(find_game['m_id'], find_game['p1_id'],
+        # binding.pry
+        current_game = RPS::Game.new(find_game['match_id'], find_game['p1_id'],
           find_game['p2_id'], find_game['p1_move'], find_game['p2_move'], find_game['id'])
         current_game.make_move!(current_game.id, params[:user_id], params[:move])
       end
 
-
+      # binding.pry
       if current_game.p1_move != nil && current_game.p2_move != nil
 
         @player1_wins = 0
         @player2_wins = 0
         @ties = 0
 
-        all_games = RPS.orm.get_games_by_match_id( params[:match_id] )
+        all_games = RPS.orm.get_games_by_match_id( params[:match_id].to_i )
+
         all_games.each do |game|
           if game['p1_move'] == game['p2_move']
             @ties += 1
@@ -68,7 +73,7 @@ module RPS
             return current_match.p1_id
           elsif @player2_wins == 3
             current_match.winner = current_match.p2_id
-            curent_match.save_winner!
+            current_match.save_winner!
             return current_match.p2_id
           end
         end

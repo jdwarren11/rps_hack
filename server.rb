@@ -30,10 +30,10 @@ get '/gameplay/:match_id' do
   erb :game_play
 end
 
-get '/gameplay/move/:move' do
-  # procces the move
-  puts params[:move]
-  redirect to '/gameplay/8'
+get '/gameplay/move/:move/user_id/:user_id/match_id/:match_id' do
+  @something = RPS::PlayGame.run(params)
+  redirect to '/gameplay/' + params[:match_id]
+
 end
 
 # post '/gameplay/:match_id' do
