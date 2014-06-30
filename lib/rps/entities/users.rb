@@ -27,4 +27,28 @@ class RPS::User
     self
   end
 
+  def get_record
+    record = RPS.orm.get_matches_by_user_id(@id)
+    if record.nil?
+      return [0,0,0]
+    end
+
+    wins = 0
+    losses = 0
+    open_matches = 0
+
+    record.each do |row|
+      if row['winner'].nil?
+        open_matches += 1
+      else
+        if row['winner'] == @id.to_i
+          wins += 1
+        else
+          losses += 1
+        end
+      end
+      return [wins, losses, open_matches]
+    end
+
+  end
 end

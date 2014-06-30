@@ -201,17 +201,6 @@ module RPS
       RPS::User.new(attrs["name"], attrs["password_digest"], attrs["id"])
     end
 
-    # def get_player(match_id)
-    #   players = @db.exec(%Q[
-    #     select * from users where 
-    #     id = (select p1_id from matches where id  = $1)
-    #     or
-    #     id = (select p2_id from matches where id  = $1)
-    #     ],[match_id])
-
-    #   return players
-    # end
-
     def get_user_by_name(name)
       result = @db.exec_params(%Q[
         SELECT * FROM users
@@ -225,7 +214,21 @@ module RPS
       end
     end
 
+    def get_matches_by_user_id(id)
+    result = @db_exec(%Q[
+      SELECT * FROM matches
+      WHERE p1_id = #{id} or p2_id = #{id}
+      ])
+      if result.num_tuples.zero?
+        return nil
+      else
+        return result
+      end
+    end
+
+
   end
+
 
   # =====================================
   

@@ -14,9 +14,9 @@ get '/' do
   # session.each {|k,e|  puts k.to_s + e.to_s}
   if session[:user_id]
     user = RPS.orm.find_user_by_id(session[:user_id])
-    # "logged in as: #{user.name}"
-    # redirect to user home page
-    erb :user_home
+    @name = user.name
+    @user_stats = user.get_record
+    erb :user_home, layout: :layout_user_home
   else
     erb :sign_in_page
   end
