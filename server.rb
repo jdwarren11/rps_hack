@@ -16,13 +16,31 @@ get '/' do
     user = RPS.orm.find_user_by_id(session[:user_id])
     @name = user.name
     @user_stats = user.get_record
+
     erb :user_home, layout: :layout_user_home
   else
     erb :sign_in_page
   end
 end
 
+get '/gameplay/:match_id' do
+  params[:match_id]
+  session[:user_id]
+  @games = RPS.orm.get_games_by_match_id(params[:match_id])
+  erb :game_play
+end
 
+get '/gameplay/move/:move' do
+  # procces the move
+  puts params[:move]
+  redirect to '/gameplay/8'
+end
+
+# post '/gameplay/:match_id' do
+#   params[:match_id]
+#   session[:user_id]
+#   erb :game_play
+# end
 
 post '/sign_up' do
   result = RPS::SignUp.run(params)

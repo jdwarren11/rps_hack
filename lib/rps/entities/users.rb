@@ -1,5 +1,6 @@
 # using sha1 is bad, but Nick told us we could be bad this one time
 require 'digest/sha1' 
+require 'pry-byebug'
 
 class RPS::User
   attr_reader :id, :name, :password_digest, :session_id
@@ -30,9 +31,10 @@ class RPS::User
   def get_record
     record = RPS.orm.get_matches_by_user_id(@id)
     if record.nil?
-      return [0,0,0]
+      return [0,0,0,nil]
     end
 
+    om = []
     wins = 0
     losses = 0
     open_matches = 0
@@ -40,6 +42,9 @@ class RPS::User
     record.each do |row|
       if row['winner'].nil?
         open_matches += 1
+
+        om << row['id'].to_i
+        
       else
         if row['winner'] == @id.to_i
           wins += 1
@@ -47,8 +52,8 @@ class RPS::User
           losses += 1
         end
       end
-      return [wins, losses, open_matches]
     end
+    return [wins, losses, open_matches, om]
 
   end
 end

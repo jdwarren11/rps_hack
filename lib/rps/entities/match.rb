@@ -3,7 +3,7 @@ module RPS
     attr_reader :p1_id, :id, :p2_id
     attr_accessor :winner
 
-    def initialize(p1_id, p2_id=nil, id=nil, winner=:pending)
+    def initialize(p1_id, p2_id=nil, id=nil, winner=nil)
       @p1_id = p1_id
       @p2_id = p2_id
       @winner = winner

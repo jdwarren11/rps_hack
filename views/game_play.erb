@@ -1,0 +1,30 @@
+<div>
+  
+    
+<!--     <div class="open_match_link"> -->
+    <table>
+      <tr>
+        <th>Player 1</th>
+        <th>Player 2</th>
+      </tr>
+   <% @games.each do |game| %>
+      <tr>
+        <td><%= game['p1_move'] %></td>
+        <td><%= game['p2_move'] %></td>
+      </tr>
+    <% end %>
+<!--     </div> -->
+  </table>
+</div>
+<!-- 
+<form method="post" action="/gameplay/:match_id">
+  <input type="submit" class="button" value="Rock">
+  <input type="submit" class="button" value="Paper">
+  <input type="submit" class="button" value="Scissors">
+</form> -->
+
+<div class="game_moves">
+  <a href= " /gameplay/move/<%='rock' %>" > <img src="../img/rock.png" /></a>
+  <a href=" /gameplay/move/<%='paper'%> "><img src="../img/paper.png" /></a>
+  <a href=" /gameplay/move/<%='scissors'%>"><img src="../img/scissors.png"/></a>
+</div>

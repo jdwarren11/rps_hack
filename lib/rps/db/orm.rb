@@ -150,7 +150,8 @@ module RPS
     def get_games_by_match_id(m_id)
       games = @db.exec_params(%Q[
         SELECT * FROM games
-        WHERE match_id = ($1);
+        WHERE match_id = ($1)
+        order by id;
         ], [m_id])
       return games
     end
@@ -215,7 +216,7 @@ module RPS
     end
 
     def get_matches_by_user_id(id)
-    result = @db_exec(%Q[
+    result = @db.exec(%Q[
       SELECT * FROM matches
       WHERE p1_id = #{id} or p2_id = #{id}
       ])

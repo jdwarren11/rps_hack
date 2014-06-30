@@ -44,14 +44,21 @@ h1 {
 }
 
 .stats_block {
-    width: 50%;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    width: 30%;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    color: white;
+    font-size: 1.5rem;
 }
 
 .main_play {
     width: 100%
     text-align: center;
+}
+
+.open_match_link {
+    padding: .5rem;
+    font-size: 1.5rem
 }
 
 /*.input {
