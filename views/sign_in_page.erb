@@ -5,6 +5,7 @@
 </head>
 <body>
 
+<!-- <div class='main'>
   <ul class="tabs" data-tab>
     <li class="tab-title active"><a href="#panel2-1">Tab 1</a></li>
     <li class="tab-title"><a href="#panel2-2">Tab 2</a></li>
@@ -14,77 +15,78 @@
     <div class="content active" id="panel2-1">
       <p>First panel content goes here...</p>
     </div>
-    
+
     <div class="content" id="panel2-2">
       <p>Second panel content goes here...</p>
     </div>
   </div>
+</div> -->
 
 
 
 
 
+<div class='main'>
+  <ul class="tabs" data-tab>
+    <li class="tab-title active"><a href="#sign_in">Sign In</a></li>
+    <li class="tab-title"><a href="#sign_up">Sign Up</a></li>
+  </ul>
 
+  <div class = 'tabs-content'>
 
-<ul class="tabs" data-tab>
-  <li class="tab-title active"><a href="#sign_up">Tab 1</a></li>
-  <li class="tab-title"><a href="#sign_in">Tab 2</a></li>
-</ul>
-
-<div class = 'tabs-content'>
-  
-  <div  class="content active" id='sign_up'> 
     
+    <div  class="content active" id='sign_in'> 
       
-      <form method="post" action="/sign_up">
         
-          <div>
-            <label for="name">Name:</label>
-            <input type="text" name="username" />
-          </div>
-        
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" />
-          </div>
+        <form method="post" action="/sign_in">
+          
+            <div>
+              <label for="name">Name:</label>
+              <input type="text" name="name" />
+            </div>
+          
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" name="password" />
+            </div>
+          
+            <div>
+              <input type="submit" class="button" value="Sign In">
+            </div>
 
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password_verify" />
-          </div>
-        
-          <div>
-            <input type="submit" value="Sign up">
-          </div>
+          </form>
 
-        </form>
-
-    </div>
-        
-    <div  class="content" id='sign_in'>
-    
+      </div>
+          
+      <div  class="content" id='sign_up'>
       
-      <form method="post" action="/sign_in">
         
-          <div>
-            <label for="name">Name:</label>
-            <input type="text" name="name" />
-          </div>
-        
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" />
-          </div>
-        
-          <div>
-            <input type="submit" value="Sign in">
-          </div>
+        <form method="post" action="/sign_up">
+          
+            <div>
+              <label for="name">Name:</label>
+              <input type="text" name="name" />
+            </div>
+          
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" name="password" />
+            </div>
 
-        </form>
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" name="password_verify" />
+            </div>
+          
+            <div>
+              <input type="submit" class="button" value="Sign Up">
+            </div>
 
-    </div>
+          </form>
 
-</div>
-      
+      </div>
+
+  </div>
+</div>      
   </body>
 </html>

@@ -3,17 +3,55 @@ require 'sinatra'
 require 'pry-byebug'
 require './lib/rps.rb'
 
+enable :sessions
+
 set :bind, '0.0.0.0'
 
+
+get '/' do 
+  # puts 'this is params' + params.to_s
+  # puts 'this is session' + session.to_s
+  # session.each {|k,e|  puts k.to_s + e.to_s}
+  if session[:user_id]
+    user = RPS.orm.find_user_by_id(session[:user_id])
+    # "logged in as: #{user.name}"
+    # redirect to user home page
+    erb :user_home
+  else
+    erb :sign_in_page
+  end
+end
+
+
+
 post '/sign_up' do
-  RPS::SignUp.run(params)
+  result = RPS::SignUp.run(params)
+  if result[:success?]
+    session[:user_id] = result[:user_id]
+    redirect to '/'
+  else
+    "user does not exist"
+  end
 end
 
-get '/' do
-# RPS.PlayGame.run(params)
- erb :sign_in_page
+
+post '/sign_in' do
+  result = RPS::SignIn.run(params)
+  if result[:success?]
+    session[:user_id] = result[:user_id]
+    redirect to '/'
+  else
+    "user does not exist"
+  end
 end
 
-# post '/' do 
-
+# get '/signout' do
+#   "<form method='post' action='/signout'>
+#     <input type='submit' value='Logout'>
+#     </form>"
 # end
+
+post '/signout' do
+  session.clear
+  redirect to '/'
+end

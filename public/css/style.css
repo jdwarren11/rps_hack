@@ -1,12 +1,29 @@
- .sign_blocks {
+body {
+    background: url('../img/rps5.jpg') no-repeat;
+    background-size: cover;
+} 
+
+.main {
+    background: rgba(255, 255, 255, .8);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.sign_blocks {
 
     float: left;
     width: 45%;
     padding: 0.3rem;
     border-right: 1px solid black;
- }
+}
 
- .center {
+.center {
 
     width: 90%;
- }
+}
+
+/*.input {
+    width: 90%;
+}*/

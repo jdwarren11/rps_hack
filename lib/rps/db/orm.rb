@@ -18,8 +18,7 @@ module RPS
         CREATE TABLE IF NOT EXISTS users (
           id serial NOT NULL PRIMARY KEY,          
           name VARCHAR(30),
-          password_digest VARCHAR(100),
-          session_id text; 
+          password_digest VARCHAR(100)
         )])
 
       @db.exec(%Q[
@@ -187,29 +186,43 @@ module RPS
     end
 
     def find_user_by_id(p_id)
-      @db.exec(%Q[
+      result = @db.exec(%Q[
         SELECT * FROM users
-        WHERE id = (p_id);
+        WHERE id = #{p_id};
         ])
+      if result.num_tuples.zero?
+        return nil
+      else
+        build_user(result.first)
+      end
     end
 
-    def get_player(match_id)
-
-      players = @db.exec(%Q[
-        select * from users where 
-        id = (select p1_id from matches where id  = $1)
-        or
-        id = (select p2_id from matches where id  = $1)
-        ],[match_id])
-
-      return players
+    def build_user(attrs)
+      RPS::User.new(attrs["name"], attrs["password_digest"], attrs["id"])
     end
 
-    def get_user_by_username(username)
-      @db.exec_params(%Q[
+    # def get_player(match_id)
+    #   players = @db.exec(%Q[
+    #     select * from users where 
+    #     id = (select p1_id from matches where id  = $1)
+    #     or
+    #     id = (select p2_id from matches where id  = $1)
+    #     ],[match_id])
+
+    #   return players
+    # end
+
+    def get_user_by_name(name)
+      result = @db.exec_params(%Q[
         SELECT * FROM users
         WHERE name = ($1);
-        ], [username])
+        ], [name])
+
+      if result.num_tuples.zero?
+        return nil
+      else
+        build_user(result.first)
+      end
     end
 
   end
