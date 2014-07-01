@@ -69,7 +69,7 @@ module RPS
 
           if @player1_wins == 3
             current_match.winner = current_match.p1_id
-            curent_match.save_winner!
+            current_match.save_winner!
             return current_match.p1_id
           elsif @player2_wins == 3
             current_match.winner = current_match.p2_id
@@ -80,6 +80,7 @@ module RPS
       end
 
       # return hash to post results
+
     end
 
 

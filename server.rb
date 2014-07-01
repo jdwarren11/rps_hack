@@ -16,24 +16,31 @@ get '/' do
     user = RPS.orm.find_user_by_id(session[:user_id])
     @name = user.name
     @user_stats = user.get_record
-
     erb :user_home, layout: :layout_user_home
   else
     erb :sign_in_page
   end
 end
 
+get '/start-match/user_id/:user_id' do
+  @start_match = RPS::AssignMatch.run(session[:user_id])
+  if @start_match
+    redirect to '/'
+  end
+end
+
 get '/gameplay/:match_id' do
   params[:match_id]
   session[:user_id]
+  match = RPS.orm.find_match_by_id(params[:match_id])
+  @current_match = RPS::Match.new(match['p1_id'], match['p2_id'], match['id'], match['winner'])
   @games = RPS.orm.get_games_by_match_id(params[:match_id])
-  erb :game_play
+  erb :game_play, layout: :layout_user_home
 end
 
 get '/gameplay/move/:move/user_id/:user_id/match_id/:match_id' do
   @something = RPS::PlayGame.run(params)
   redirect to '/gameplay/' + params[:match_id]
-
 end
 
 # post '/gameplay/:match_id' do
@@ -60,6 +67,7 @@ post '/sign_in' do
     redirect to '/'
   else
     "user does not exist"
+    redirect to '/'
   end
 end
 

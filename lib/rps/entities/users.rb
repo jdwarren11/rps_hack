@@ -31,7 +31,7 @@ class RPS::User
   def get_record
     record = RPS.orm.get_matches_by_user_id(@id)
     if record.nil?
-      return [0,0,0,nil]
+      return [0,0,0,[]]
     end
 
     om = []

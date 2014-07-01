@@ -1,7 +1,4 @@
-<div>
-  
-    
-<!--     <div class="open_match_link"> -->
+<div class='large-2 columns'>
     <table>
       <tr>
         <th>Player 1</th>
@@ -13,18 +10,15 @@
         <td><%= game['p2_move'] %></td>
       </tr>
     <% end %>
-<!--     </div> -->
   </table>
 </div>
-<!-- 
-<form method="post" action="/gameplay/:match_id">
-  <input type="submit" class="button" value="Rock">
-  <input type="submit" class="button" value="Paper">
-  <input type="submit" class="button" value="Scissors">
-</form> -->
 
-<div class="game_moves">
-  <a href= " /gameplay/move/<%='rock'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>" > <img src="../img/rock.png" /></a>
-  <a href=" /gameplay/move/<%='paper'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/paper.png" /></a>
-  <a href=" /gameplay/move/<%='scissors'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/scissors.png"/></a>
-</div>
+<% if !@current_match.winner %>
+  <div class="large-10 columns text-center game_moves">
+    <a href= " /gameplay/move/<%='rock'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>" > <img src="../img/rock.png" /></a>
+    <a href=" /gameplay/move/<%='paper'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/paper.png" /></a>
+    <a href=" /gameplay/move/<%='scissors'%>/user_id/<%=session[:user_id]%>/match_id/<%=params[:match_id]%>"><img src="../img/scissors.png"/></a>
+  </div>
+<% else %>
+  <h3>GAME OVER <%= @current_match.winner %></h3>
+<% end %>
