@@ -18,25 +18,14 @@
       /* You will put the rest of the styles here */
     </style>
   </head>
-  <body>
-    <header class="row">
-        <%#= erb :_header %>   
-    </header>
+  <body class="<%= @bodyclass %>">
     <section class="row">
-      <div class="large-3 columns">
-          <%#= erb :_user_info %>
-      </div>
-      <!-- <div class="large-3-centered columns"> -->
       <div>
           <%= yield %>
       </div>
-      <div class="large-3 columns">
-          <%#= erb :_ads_left_column %>
-      </div>
+
     </section>
-    <footer class="row">
-        <%#= erb :_footer %>
-    </footer>
+
     <script>$(document).foundation();</script>
   </body>
 </html>

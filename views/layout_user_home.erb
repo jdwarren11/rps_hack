@@ -15,24 +15,25 @@
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
       }*/
-      /* You will put the rest of the styles here */
     </style>
   </head>
-  <body>
+  <body class="<%= @bodyclass %>">
     <header class="row">
-        <%#= erb :_header %>   
+      <div class='large-2 medium-4 small-4 columns home'>
+        <form method='get' action='/'>
+          <input type='submit' class="button" value='Home'>
+        </form>
+      </div> 
+      <div class='large-2 medium-4 small-4 columns right logout'>
         <form method='post' action='/signout'>
           <input type='submit' class="button" value='Logout'>
         </form>
+      </div>
     </header>
+
     <div class="row">
-      
-        <%= yield %>
-      
+      <%= yield %>
     </div>
-    <footer class="row">
-        <%#= erb :_footer %>
-    </footer>
     <script>$(document).foundation();</script>
   </body>
 </html>

@@ -30,6 +30,7 @@ get '/start-match/user_id/:user_id' do
 end
 
 get '/gameplay/:match_id' do
+  @bodyclass = "gameplay"
   params[:match_id]
   session[:user_id]
   match = RPS.orm.find_match_by_id(params[:match_id])
@@ -50,6 +51,7 @@ end
 # end
 
 post '/sign_up' do
+  @bodyclass = "signin"
   result = RPS::SignUp.run(params)
   if result[:success?]
     session[:user_id] = result[:user_id]
@@ -61,6 +63,7 @@ end
 
 
 post '/sign_in' do
+  @bodyclass = "signin"
   result = RPS::SignIn.run(params)
   if result[:success?]
     session[:user_id] = result[:user_id]

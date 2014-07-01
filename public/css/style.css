@@ -1,9 +1,25 @@
 body {
     background: url('../img/rps4.jpg') no-repeat;
     background-size: cover;
-} 
+}
+
+body.gameplay {
+    background: black;
+}
+
+body.signin {
+    background: url('../img/rps5.jpg') no-repeat;
+    background-size: cover;
+}
 
 h1 {
+    color: white;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+h3 {
     color: white;
 }
 
@@ -34,7 +50,11 @@ h1 {
     float: left;
     width: 50%;
     padding: 0.3rem;
-    text-align: center;
+    text-align: left;
+}
+
+.play_block.rules {
+    text-align: right;
 }
 
 .play_head {
@@ -51,11 +71,10 @@ h1 {
     font-size: 1.5rem;
 }
 
-.main_play {
-    width: 100%
-    text-align: center;
+/*.main_play {
+    width: 100%;
 }
-
+*/
 .open_match_link {
     padding: .5rem;
     font-size: 1.5rem
