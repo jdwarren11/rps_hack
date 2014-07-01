@@ -54,6 +54,13 @@ module RPS
       response.first["id"]
     end
 
+    # def update_match_p2(p2_id,id)
+    #   @db.exec_params(%Q[
+
+    #     update matches set p1_id = $1,
+
+    #     ])
+
     def find_open_match
       open_match = @db.exec(%Q[
         select * from matches 
@@ -112,7 +119,7 @@ module RPS
         VALUES ($1, $2, $3)
         RETURNING id;
         ], [m_id, p1_id, p2_id])
-      
+
       response.first["id"]
     end
 

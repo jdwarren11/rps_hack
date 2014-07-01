@@ -11,6 +11,13 @@ module RPS
       else
         # binding.pry
         current_match = RPS::Match.new(match['p1_id'], match['p2_id'], match['id'])
+
+        # if current_match.p2_id.nil?
+
+        #     current_match.p2_id = params[:user_id].to_i
+        #     current_match.update!
+        # end
+
       end
 
       player = RPS.orm.find_user_by_id( params[:user_id] )

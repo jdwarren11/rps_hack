@@ -35,7 +35,7 @@ get '/gameplay/:match_id' do
   match = RPS.orm.find_match_by_id(params[:match_id])
   @current_match = RPS::Match.new(match['p1_id'], match['p2_id'], match['id'], match['winner'])
   @games = RPS.orm.get_games_by_match_id(params[:match_id])
-  erb :game_play, layout: :layout_user_home
+    erb :game_play, layout: :layout_user_home
 end
 
 get '/gameplay/move/:move/user_id/:user_id/match_id/:match_id' do

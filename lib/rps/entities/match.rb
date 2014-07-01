@@ -1,7 +1,7 @@
 module RPS
   class Match
     attr_reader :p1_id, :id, :p2_id
-    attr_accessor :winner
+    attr_accessor :winner, :p1_id, :id, :p2_id
 
     def initialize(p1_id, p2_id=nil, id=nil, winner=nil)
       @p1_id = p1_id
@@ -19,6 +19,10 @@ module RPS
     def save_winner!
         RPS.orm.update_winner(@id, @winner)
     end
+
+    # def update!
+    #   RPS.orm.update_match(@p1_id, @p2_id, @id, @winner)
+    # end
 
     
   end

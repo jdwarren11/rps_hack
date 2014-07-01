@@ -43,10 +43,10 @@ class RPS::User
       if row['winner'].nil?
         open_matches += 1
 
-        om << row['id'].to_i
+        om << row
         
       else
-        if row['winner'] == @id.to_i
+        if row['winner'] == @id
           wins += 1
         else
           losses += 1

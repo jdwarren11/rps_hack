@@ -16,7 +16,7 @@
     <%= @user_stats[1]%>    
   </span>
 
-  <span id = 'loses' class = 'stats_block'>
+  <span id = 'matches' class = 'stats_block'>
     Open Matches:
     <%= @user_stats[2]%>
   </span>
@@ -29,11 +29,16 @@
   <div id = 'select_match' class = 'play_block'>
 
     <% @user_stats[3].each do |match| %>
-    
-    <div class="open_match_link">
-      <a href="/gameplay/<%=match%>">Match <%=match %> </a>
-    </div>
-    
+    <% if match['p2_id'].nil? %>
+      <div>
+        Match <%=match['id']%> (waiting for player 2)
+      </div>
+    <%else%>
+
+      <div class="open_match_link">
+        <a href="/gameplay/<%=match['id']%>">Match <%=match['id'] %> </a>
+      </div>
+    <% end %>
     <!-- <%= match %> -->
     <% end %>
 
